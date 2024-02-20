@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     
     var countries = [String]()
     var score = 0
+    var questionCount = 0
     var currectAnswer = 0
     
     override func viewDidLoad() {
@@ -43,6 +44,20 @@ class ViewController: UIViewController {
         button3.setImage(UIImage(named: countries[2]), for: .normal)
                 
         title = "\(countries[currectAnswer].uppercased()) \(score)"
+        
+        questionCount += 1
+        
+        if questionCount > 5 {
+            let finalAC = UIAlertController(title: "Your result:", message: "Final score is \(score).", preferredStyle: .alert)
+            finalAC.addAction(UIAlertAction(title: "Restart", style: .default, handler: resetGame))
+            present(finalAC, animated: true)
+        }
+    }
+    
+    func resetGame(action: UIAlertAction!) {
+        score = 0
+        questionCount = 0
+        askQuastion(action: nil)
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
@@ -52,7 +67,7 @@ class ViewController: UIViewController {
             title = "Correct"
             score += 1
         } else {
-            title = "Wrong"
+            title = "Wrong! That’s the flag of \(countries[sender.tag].capitalized)."
             score -= 1
         }
         
