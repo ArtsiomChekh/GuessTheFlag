@@ -45,13 +45,21 @@ class ViewController: UIViewController {
                 
         title = "\(countries[currectAnswer].uppercased()) \(score)"
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(scoreTapped))
+        
         questionCount += 1
         
-        if questionCount > 5 {
+        if questionCount > 10 {
             let finalAC = UIAlertController(title: "Your result:", message: "Final score is \(score).", preferredStyle: .alert)
             finalAC.addAction(UIAlertAction(title: "Restart", style: .default, handler: resetGame))
             present(finalAC, animated: true)
         }
+    }
+    
+    @objc func scoreTapped() {
+        let sc = UIAlertController(title: nil, message: "Total score is \(score).", preferredStyle: .alert)
+        sc.addAction(UIAlertAction(title: "Close", style: .cancel))
+        present(sc, animated: true)
     }
     
     func resetGame(action: UIAlertAction!) {
